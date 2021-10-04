@@ -33,12 +33,32 @@ func init() {
 	generateCmd.PersistentFlags().StringVarP(&namespace, "namespace", "n", "", "")
 	generateCmd.PersistentFlags().StringVarP(&deployment, "deployment", "d", "", "")
 	generateCmd.PersistentFlags().StringVarP(&container, "container", "c", "", "")
+
+	generateCmd.MarkPersistentFlagRequired("namespace")
+	generateCmd.MarkPersistentFlagRequired("deployment")
+	generateCmd.MarkPersistentFlagRequired("container")
 }
 
 var generateCmd = &cobra.Command{
-	Use:       "generate QOS",
-	Short:     `Generate the resources YAML`,
-	Long:      "Generate the resources YAML for a given container and QoS (burstable/guaranteed).",
+	Use:   "generate QOS",
+	Short: `Generate the resources YAML`,
+	Long: `Generate the resources YAML for a given container and QoS (burstable/guaranteed). 
+	
+See https://kubernetes.io/docs/tasks/configure-pod-container/quality-service-pod/`,
+	Example: `
+# Generates the resources YAML for the nginx container of the nginx deployment,
+#  in the default namespace, with Guaranteed QoS
+goldilocks generate guaranteed -n default -d nginx -c nginx
+
+# Output: 
+# resources:
+#   requests:
+#     cpu: 5m
+#     memory: 100M
+#   limits:
+#     cpu: 5m
+#     memory: 100M 
+	`,
 	Args:      cobra.ExactValidArgs(1),
 	ValidArgs: []string{"burstable", "guaranteed"},
 	Run: func(cmd *cobra.Command, args []string) {

@@ -102,6 +102,26 @@ Runs the goldilocks dashboard server that will display recommendations. Listens 
 
 Queries all the VPA objects that are labelled for this tool across all namespaces and summarizes their suggestions into a JSON object.
 
+### generate
+
+`goldilocks generate [guaranteed|burstable] -n [namespace] -d [deployment] -c [container]`
+
+Generates the `resources` YAML for a given [QoS class](https://kubernetes.io/docs/tasks/configure-pod-container/quality-service-pod/) and deployment / container. The output can be used to update manifests.
+
+Example: 
+goldilocks generate guaranteed -n default -d nginx -c nginx
+
+Output: 
+```yaml
+resources:
+  requests:
+    cpu: 5m
+    memory: 100M
+  limits:
+    cpu: 5m
+    memory: 100M
+```
+
 ### Container Exclusions
 
 The `dashboard` and `summary` commands can exclude recommendations for a list of comma separated container names using the `--exclude-containers` argument. This option can be useful for hiding recommendations for sidecar containers for things like Linkerd and Istio.
