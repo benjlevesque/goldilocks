@@ -19,7 +19,7 @@ Available Commands:
   dashboard   Run the goldilocks dashboard that will show recommendations.
   delete-vpas Delete VPAs
   help        Help about any command
-  summary     Genarate a summary of the vpa recommendations in a namespace.
+  summary     Generate a summary of the vpa recommendations in a namespace.
   version     Prints the current version of the tool.
 
 Flags:
